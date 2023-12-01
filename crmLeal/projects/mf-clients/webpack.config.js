@@ -2,14 +2,16 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
-  name: 'mf-clients',
+  name: 'mfClients',
 
   exposes: {
-    './Component': './projects/mf-clients/src/app/app.component.ts',
+    './ClientsModule': './projects/mf-clients/src/app/clients/clients.module.ts',
   },
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
   },
-
+  sharedMappings: [
+    "@shared-lib"
+  ],
 });
