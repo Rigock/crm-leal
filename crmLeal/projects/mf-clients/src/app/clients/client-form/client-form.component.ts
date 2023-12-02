@@ -30,7 +30,10 @@ export class ClientFormComponent {
 
   formClient = this.fb.group({
       'name': ['', Validators.required ],
-      'contact': ['', Validators.required ],
+      'contact': ['', [
+        Validators.required,
+        Validators.pattern("^[0-9]*$"),
+        Validators.maxLength(10),]],
       'address': [''],
       'email': ['', [Validators.required, Validators.email]],
   });
@@ -38,6 +41,7 @@ export class ClientFormComponent {
 
   procesar (clientData: any) {
     console.log('Data:: ',clientData)
+    this.formClient.reset();
   }
 
 }

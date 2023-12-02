@@ -1,49 +1,41 @@
-<div class="card">
-  <div class="card-body">
+
+<mat-card class="cardContainer">
+  <mat-card-content>
     <form [formGroup]="formClient" (ngSubmit)="procesar(formClient.value)">
       <div class="field">
-        <label>Nombre</label>
-        <input type="text" formControlName="name" class="form-control" placeholder="Ingrese el nombre">
-        <div class="alert alert-danger" [hidden]="name.valid || name.pristine">
-          El nombre es obligatorio
-        </div>
-      </div>
-      <div class="example-container">
         <mat-form-field>
-          <mat-label>Enter your email</mat-label>
-          <input matInput placeholder="pat@example.com" [formControl]="email">
+          <mat-label>Ingrese el nombre</mat-label>
+          <input matInput placeholder="Ingrese el nombre" formControlName="name">
           <mat-error>El nombre es obligatorio</mat-error>
-          <!-- @if (email.invalid) {
-            <mat-error>El nombre es obligatorio</mat-error>
-          } -->
         </mat-form-field>
       </div>
       <div class="field">
-        <label>Número de contacto</label>
-        <input type="text" formControlName="contact" class="form-control" placeholder="Ingrese el número de contacto">
-        <div class="alert alert-danger" [hidden]="contact.valid || contact.pristine">
-          El número de contacto es obligatorio
-        </div>
+        <mat-form-field>
+          <mat-label>Número de contacto</mat-label>
+          <input matInput placeholder="301 0100101" formControlName="contact">
+          <mat-error *ngIf="contact.errors?.['required']">El número de contacto es obligatorio</mat-error>
+          <mat-error >Número de contacto inválido</mat-error>
+        </mat-form-field>
       </div>
       <div class="field">
-        <label>Dirección</label>
-        <input type="text" formControlName="address" class="form-control" placeholder="Ingrese el nombre">      
+        <mat-form-field>
+          <mat-label>Dirección</mat-label>
+          <input matInput placeholder="Avenida Siempre viva" formControlName="address">
+        </mat-form-field>
       </div>
       <div class="field">
-        <label>Email</label>
-        <input type="text" formControlName="email" class="form-control" placeholder="Ingrese el correo electrónico">
-        <div class="alert alert-danger" [hidden]="email.valid || email.pristine">
-          <span *ngIf="email.errors?.['required']">
-            El email es obligatorio
-          </span>
-          <span *ngIf="email.errors?.['email']">
-            El email debe ser válido
-          </span>
-        </div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="email@example.com" formControlName="email">
+          <mat-error  *ngIf="email.errors?.['required']">El email es obligatorio</mat-error>
+          <mat-error  *ngIf="email.errors?.['email']">El email debe ser válido</mat-error>
+        </mat-form-field>
       </div>
-      <button class="btn" [disabled]="formClient.invalid">
-        Guardar
-      </button>
+      <div class="btn">
+        <button mat-flat-button color="primary" [disabled]="formClient.invalid">
+          Guardar
+        </button>
+      </div>
     </form>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>
