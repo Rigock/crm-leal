@@ -9,8 +9,8 @@ const routes: Routes = [
   },
   {
     path:'sales',
-    loadChildren: () => import('mfSales/SalesComponent')
-    .then( (m) => m.SalesComponent )
+    loadChildren: () => import('mfSales/SalesModule')
+    .then( (m) => m.SalesModule )
   },
 ];
 

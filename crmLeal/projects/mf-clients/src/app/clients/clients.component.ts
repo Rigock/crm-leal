@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ModalComponent } from './modal/modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clients',
@@ -16,6 +18,7 @@ export class ClientsComponent implements OnInit, AfterViewInit  {
   displayedColumns: string[] = ['name', 'address', 'contact', 'email', 'actions'];
   dataSource = new MatTableDataSource();
   
+  unsubscribe$: Subject<boolean> = new Subject();
 
   constructor (
     private _sharedLibService : SharedLibService,
@@ -25,6 +28,11 @@ export class ClientsComponent implements OnInit, AfterViewInit  {
 
   ngOnInit(): void {
     this.getClients();
+    this._sharedLibService.getClientCreated()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((resp) => {
+      console.log('LIB Response from CLients: ',resp);
+    })
   }
   
   getClients() {

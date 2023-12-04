@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SalesService } from '../services/sales.service';
+import { SharedLibService } from '@shared-lib';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/internal/Subject';
 
 @Component({
   selector: 'app-sales',
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.scss'
 })
-export class SalesComponent {
+export class SalesComponent  implements OnInit{
 
+  unsubscribe$: Subject<boolean> = new Subject();
+  
   view: [number, number] = [900, 400];
 
   // options
@@ -29,8 +34,18 @@ export class SalesComponent {
   schemeType: any = 'ordinal';
 
   constructor(
-    private _salesService : SalesService
+    private _salesService : SalesService,
+    private _sharedLibService : SharedLibService,
   ) {}
+
+  
+  ngOnInit(): void {
+    this._sharedLibService.getClientCreated()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((resp) => {
+      console.log('LIB response from SALES: ', resp);
+    })
+  }
 
   get single() {
     return this._salesService.salesData;
@@ -42,8 +57,7 @@ export class SalesComponent {
 
   refreshData() {
     this._salesService.randomData();
-    const neeWWClientes = this._salesService.getNewClients();
-    console.log('los nuevos clientes:',neeWWClientes);
+    this._salesService.getNewClients();
   }
 
   onSelect(data: any): void {
