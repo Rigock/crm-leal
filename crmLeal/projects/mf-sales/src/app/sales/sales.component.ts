@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SalesService } from '../services/sales.service';
-import { single } from '../services/data';
 
 @Component({
   selector: 'app-sales',
