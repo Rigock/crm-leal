@@ -1,6 +1,8 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { CrudService } from '../../services/crud.service';
+import { SharedLibService } from '@shared-lib';
+
 @Component({
   selector: 'client-form',
   templateUrl: './client-form.component.html',
@@ -15,6 +17,7 @@ export class ClientFormComponent implements OnInit {
   constructor (
     private fb: FormBuilder,
     private _crudService: CrudService,
+    private _sharedLibService : SharedLibService,
   ) {}
 
   get name (){
@@ -50,7 +53,7 @@ export class ClientFormComponent implements OnInit {
   }
 
   createClient ( clientData: any ) { 
-    this._crudService.createClient(clientData)
+    this._sharedLibService.createClient(clientData)
     .then( resp => {
       this.clientSetted.emit(clientData);
       this.formClient.reset();
@@ -58,6 +61,7 @@ export class ClientFormComponent implements OnInit {
       this.formClient.get('contact')?.setErrors(null);
       this.formClient.get('address')?.setErrors(null);
       this.formClient.get('email')?.setErrors(null);
+      this._sharedLibService.setClientCreated(clientData);
     })
   }
 

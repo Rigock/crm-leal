@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class CrudService {
 
-  private url = 'https://crudcrud.com/api/934c53e898e645798d8a825de36ed41a';
+  private url = 'https://crudcrud.com/api/781dce68da3346a4b734334ba46cd6bd';
   clients : any;
 
   constructor(

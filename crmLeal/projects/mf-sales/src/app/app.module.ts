@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     NgxChartsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    HttpClientModule,
   ],
   providers: [],
   exports: [RouterModule],
