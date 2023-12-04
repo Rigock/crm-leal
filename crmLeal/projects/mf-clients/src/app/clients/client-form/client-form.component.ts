@@ -44,7 +44,6 @@ export class ClientFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    console.log('modal edit: ',this.modalEditData);
     if (this.modalEditData) {
       this.setForm(this.modalEditData);
     }
