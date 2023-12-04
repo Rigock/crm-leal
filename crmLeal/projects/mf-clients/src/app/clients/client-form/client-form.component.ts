@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { CrudService } from '../../services/crud.service';
 @Component({
   selector: 'client-form',
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
 })
-export class ClientFormComponent {
+export class ClientFormComponent implements OnInit {
+
+  @Input() modalEditData? : any;
+
+  @Output() clientSetted = new EventEmitter<any>();
 
   constructor (
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _crudService: CrudService,
   ) {}
 
   get name (){
@@ -38,10 +43,39 @@ export class ClientFormComponent {
       'email': ['', [Validators.required, Validators.email]],
   });
 
+  ngOnInit(): void {
+    console.log('modal edit: ',this.modalEditData);
+    if (this.modalEditData) {
+      this.setForm(this.modalEditData);
+    }
+  }
 
-  procesar (clientData: any) {
-    console.log('Data:: ',clientData)
-    this.formClient.reset();
+  createClient ( clientData: any ) { 
+    this._crudService.createClient(clientData)
+    .then( resp => {
+      this.clientSetted.emit(clientData);
+      this.formClient.reset();
+      this.formClient.get('name')?.setErrors(null);
+      this.formClient.get('contact')?.setErrors(null);
+      this.formClient.get('address')?.setErrors(null);
+      this.formClient.get('email')?.setErrors(null);
+    })
+  }
+
+  setForm( _data? : any ) {
+    this.formClient.patchValue({
+      name: _data.name,
+      contact: _data.contact,
+      address: _data.address,
+      email: _data.email
+    })
+  }
+
+  editClient( _editClient: any ) {
+    this._crudService.updateClient(_editClient, this.modalEditData._id)
+    .then( resp => {
+      this.clientSetted.emit(_editClient);
+    })
   }
 
 }

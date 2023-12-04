@@ -1,7 +1,7 @@
 
 <mat-card class="cardContainer">
   <mat-card-content>
-    <form [formGroup]="formClient" (ngSubmit)="procesar(formClient.value)">
+    <form [formGroup]="formClient">
       <div class="field">
         <mat-form-field>
           <mat-label>Ingrese el nombre</mat-label>
@@ -32,8 +32,17 @@
         </mat-form-field>
       </div>
       <div class="btn">
-        <button mat-flat-button color="primary" [disabled]="formClient.invalid">
+        <button *ngIf="!modalEditData"
+         mat-flat-button color="primary"
+         [disabled]="formClient.invalid"
+         (click)="createClient(formClient.value)">
           Guardar
+        </button>
+        <button *ngIf="modalEditData"
+         mat-flat-button color="primary" 
+         [disabled]="formClient.invalid" 
+         (click)="editClient(formClient.value)">
+          Editar
         </button>
       </div>
     </form>
