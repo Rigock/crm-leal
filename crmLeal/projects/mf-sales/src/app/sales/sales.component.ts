@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { SalesService } from '../services/sales.service';
+import { single } from '../services/data';
 
 @Component({
   selector: 'app-sales',
@@ -7,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class SalesComponent {
 
-  view: [number, number] = [700, 400];
+  view: [number, number] = [900, 400];
 
   // options
   gradient: boolean = true;
@@ -15,31 +17,34 @@ export class SalesComponent {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
+  // options horizontal bar chart
+  showXAxis: boolean = true;
+  showYAxis: boolean = true;
+  gradientH: boolean = false;
+  showLegendH: boolean = true;
+  legendPosition: any = 'right';
+  showXAxisLabel: boolean = true;
+  yAxisLabel: string = 'Clientes';
+  showYAxisLabel: boolean = true;
+  xAxisLabel = 'Ventas';
+  schemeType: any = 'ordinal';
 
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
+  constructor(
+    private _salesService : SalesService
+  ) {}
 
-  single = [
-    {
-      "name": "Germany",
-      "value": 8940000
-    },
-    {
-      "name": "USA",
-      "value": 5000000
-    },
-    {
-      "name": "France",
-      "value": 7200000
-    },
-      {
-      "name": "UK",
-      "value": 6200000
-    }
-  ];
-  constructor() {
-    // Object.assign(this, { single });
+  get single() {
+    return this._salesService.salesData;
+  }
+
+  get horizontalChart() {
+    return  this._salesService.salesPeriodData;
+  }
+
+  refreshData() {
+    this._salesService.randomData();
+    const neeWWClientes = this._salesService.getNewClients();
+    console.log('los nuevos clientes:',neeWWClientes);
   }
 
   onSelect(data: any): void {
