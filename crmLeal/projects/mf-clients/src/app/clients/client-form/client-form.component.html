@@ -1,0 +1,50 @@
+
+<mat-card class="cardContainer">
+  <mat-card-content>
+    <form [formGroup]="formClient">
+      <div class="field">
+        <mat-form-field>
+          <mat-label>Ingrese el nombre</mat-label>
+          <input matInput placeholder="Ingrese el nombre" formControlName="name">
+          <mat-error>El nombre es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <mat-form-field>
+          <mat-label>Número de contacto</mat-label>
+          <input matInput placeholder="301 0100101" formControlName="contact">
+          <mat-error *ngIf="contact.errors?.['required']">El número de contacto es obligatorio</mat-error>
+          <mat-error >Número de contacto inválido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <mat-form-field>
+          <mat-label>Dirección</mat-label>
+          <input matInput placeholder="Avenida Siempre viva" formControlName="address">
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="email@example.com" formControlName="email">
+          <mat-error  *ngIf="email.errors?.['required']">El email es obligatorio</mat-error>
+          <mat-error  *ngIf="email.errors?.['email']">El email debe ser válido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="btn">
+        <button *ngIf="!modalEditData"
+         mat-flat-button color="primary"
+         [disabled]="formClient.invalid"
+         (click)="createClient(formClient.value)">
+          Guardar
+        </button>
+        <button *ngIf="modalEditData"
+         mat-flat-button color="primary" 
+         [disabled]="formClient.invalid" 
+         (click)="editClient(formClient.value)">
+          Editar
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
