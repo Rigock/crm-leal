@@ -137,6 +137,7 @@
               "projects/mf-sales/src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/mf-sales/src/styles.scss"
             ],
             "scripts": [],
@@ -210,6 +211,7 @@
               "projects/mf-sales/src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/mf-sales/src/styles.scss"
             ],
             "scripts": []
