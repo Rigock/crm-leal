@@ -5,11 +5,14 @@ module.exports = withModuleFederationPlugin({
   name: 'mfSales',
 
   exposes: {
-    './Component': './projects/mf-sales/src/app/app.component.ts',
+    './SalesModule': './projects/mf-sales/src/app/sales/sales.module.ts',
   },
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
   },
+  sharedMappings: [
+    "@shared-lib"
+  ],
 
 });
